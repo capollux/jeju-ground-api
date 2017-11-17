@@ -3,9 +3,7 @@ class Api::V1::UsersController < ApplicationController
   skip_before_action :authenticate
 
   def create
-    @user = User.find_or_initialize_by(kakao_id: params[:user][:kakao_id].to_i)
-
-    @user.activate unless @user.new_record?
+    @user = User.find_or_initialize_by(kakao_id: params[:user][:kakao_id])
 
     if @user.update_attributes(user_params)
       render json: @user, status: :created
@@ -15,9 +13,7 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def destroy
-    @user = User.find_by(kakao_id: params[:id].to_i)
-
-    @user.inactivate unless @user.nil?
+    User.find_by(kakao_id: params[:id]).destroy
 
     head :no_content
   end

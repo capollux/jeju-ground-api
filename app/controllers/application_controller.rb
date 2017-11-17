@@ -12,7 +12,7 @@ class ApplicationController < ActionController::API
     # Authenticate the user with token based authentication
     def authenticate
         authenticate_with_http_token do |token, options|
-          @current_user = User.find_by(kakao_id: token)
+          @current_user = User.find_by(kakao_id: token.split.pop)
         end
 
         if @current_user.nil?

@@ -5,7 +5,12 @@ class Api::V1::FlagsController < ApplicationController
   def index
     @flags = @current_user.flags
 
-    render json: @flags
+    json_array = Array.new
+    @flags.each do |flag|
+      json_array << {id: flag.id, name: flag.spot.name, lat: flag.spot.lat, lng: flag.spot.lng}
+    end
+
+    render json: json_array
   end
 
   def create
@@ -14,19 +19,26 @@ class Api::V1::FlagsController < ApplicationController
     render json: @flag 
   end
 
+  def destroy
+    @flag = Flag.find(params[:id])
+    @flag.destroy
+
+    head :no_content
+  end
+
   private
 
     def create_spot
-      @spot = Spot.find_or_initialize_by(spot_id: params[:spot][:spot_id].to_i)
+      @spot = Spot.find_or_initialize_by(spot_id: params[:spot][:spot_id])
 
       if @spot.new_record?
-        region_id = Region.find_by(region_id: params[:spot][:region_id].to_i).id
+        region_id = Region.find_by(name: params[:spot][:region]).id
         @spot.update_attributes(spot_params.slice(:name, :indoor, :lat, :lng).merge(region_id: region_id))
       end
     end
 
     def spot_params
-      params.require(:spot).permit(:region_id, :spot_id, :name, :indoor, :lat, :lng)
+      params.require(:spot).permit(:spot_id, :region, :name, :indoor, :lat, :lng)
     end
 
 end
