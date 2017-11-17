@@ -4,6 +4,8 @@ class Api::V1::FlagsController < ApplicationController
 
   def index
     @flags = @current_user.flags
+
+    render json: @flags
   end
 
   def create
