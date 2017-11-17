@@ -14,16 +14,26 @@ class Api::V1::FlagsController < ApplicationController
   end
 
   def create
-    @flag = @current_user.flags.find_or_create_by(spot: @spot)
+    @flag = @current_user.flags.find_or_initialize_by(spot: @spot)
 
-    render json: @flag 
+    if @flag.new_record?
+      if @flag.save
+        render json: '깃발을 세웠습니다 :)', status: :created
+      else
+        render json: @spot.errors, status: :unprocessable_entity
+      end
+    else
+      @flag.destroy
+
+      render json: '깃발이 제거되었습니다 :('
+    end
   end
 
   def destroy
     @flag = Flag.find(params[:id])
     @flag.destroy
 
-    head :no_content
+    render json: '깃발이 제거되었습니다 :('
   end
 
   private
