@@ -12,6 +12,20 @@ ActiveAdmin.register Spot do
 #   permitted
 # end
 
+  batch_action :activate do |ids|
+    batch_action_collection.find(ids).each do |spot|
+      spot.activate!
+    end
+    redirect_to collection_path, alert: "The spots were activated."
+  end
+
+  batch_action :deactivate do |ids|
+    batch_action_collection.find(ids).each do |spot|
+      spot.deactivate!
+    end
+    redirect_to collection_path, alert: "The spots were deactivated."
+  end
+
   permit_params :region_id, :spot_id, :name, :indoor, :lat, :lng, :active
 
   index do

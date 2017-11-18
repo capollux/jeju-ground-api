@@ -13,4 +13,14 @@ class Spot < ApplicationRecord
     end
 
   end
+
+  def activate!
+    self.active = true
+    self.save
+  end
+
+  def deactivate!
+    self.active = false
+    self.save
+  end
 end
