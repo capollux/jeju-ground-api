@@ -12,7 +12,7 @@ ActiveAdmin.register Spot do
 #   permitted
 # end
 
-  permit_params :region_id, :spot_id, :name, :indoor, :lat, :lng
+  permit_params :region_id, :spot_id, :name, :indoor, :lat, :lng, :active
 
   index do
     selectable_column
@@ -23,6 +23,7 @@ ActiveAdmin.register Spot do
     column :indoor
     column :lat
     column :lng
+    column :active
     actions
   end
 
@@ -36,6 +37,7 @@ ActiveAdmin.register Spot do
       f.input :indoor
       f.input :lat
       f.input :lng
+      f.input :active
     end
     f.actions
   end

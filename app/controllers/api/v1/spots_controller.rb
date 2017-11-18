@@ -1,7 +1,7 @@
 class Api::V1::SpotsController < ApplicationController
 
   def index
-    @spots = Spot.includes(:region)
+    @spots = Spot.where(active: true).includes(:region)
 
     json_array = Array.new
     visited_spots = @current_user.visited_spots.ids
