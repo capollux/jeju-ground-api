@@ -31,4 +31,4 @@ region_hash.each do |region|
   Region.create!(region)
 end
 
-AdminUser.create!(email: 'capollux@naver.com', password: ENV["ACTIVE_ADMIN_PASSWORD"], password_confirmation: ENV["ACTIVE_ADMIN_PASSWORD"]) if Rails.env.development?
+AdminUser.create!(email: 'capollux@naver.com', password: ENV["ACTIVE_ADMIN_PASSWORD"], password_confirmation: ENV["ACTIVE_ADMIN_PASSWORD"])
