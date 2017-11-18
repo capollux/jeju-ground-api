@@ -18,14 +18,16 @@ class Api::V1::FlagsController < ApplicationController
 
     if @flag.new_record?
       if @flag.save
-        render json: '깃발을 세웠습니다 :)', status: :created
+        # render json: '깃발을 세웠습니다 :)', status: :created
+        render json: 'true', status: :created
       else
         render json: @spot.errors, status: :unprocessable_entity
       end
     else
       @flag.destroy
 
-      render json: '깃발이 제거되었습니다 :('
+      # render json: '깃발이 제거되었습니다 :('
+      render json: 'false'
     end
   end
 
