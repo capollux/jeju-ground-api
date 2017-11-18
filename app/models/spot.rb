@@ -9,7 +9,7 @@ class Spot < ApplicationRecord
     
     if self.indoor
       self.lat = self.region.lat
-      self.lat = self.region.lat
+      self.lng = self.region.lng
     end
 
   end

@@ -30,3 +30,5 @@ region_hash = [{region_id:84, name:'용담2동', lat:33.5115150355, lng:126.5116
 region_hash.each do |region|
   Region.create!(region)
 end
+
+AdminUser.create!(email: 'capollux@naver.com', password: ENV["ACTIVE_ADMIN_PASSWORD"], password_confirmation: ENV["ACTIVE_ADMIN_PASSWORD"]) if Rails.env.development?
